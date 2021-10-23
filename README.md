@@ -1,7 +1,7 @@
 # ML_Project
 # Part I 
-Step 1: Training
-Apply the Decision Tree model on the two data sets respectively.
+Step 1: Training  
+Apply the Decision Tree model on the two data sets respectively.  
 Apply the K-NN model on the two data sets respectively.
 Apply the Naive Bayes model on the two data sets respectively.
 (Note: Please divide the dataset into a training set with 80% data and a test set with 20% data)
