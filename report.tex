@@ -1,0 +1,156 @@
+%
+% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[sigconf]{acmart}
+\usepackage{graphicx} 
+\usepackage{float} 
+\usepackage{subfigure} 
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        
+ numberstyle=\tiny\color{gray},                       
+ frame=none,                                          
+ backgroundcolor=\color[RGB]{245,245,244},             
+ keywordstyle=\color[RGB]{40,40,255},                 
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   
+ showstringspaces=false,                              
+ language=c++,                                        
+}
+%
+% defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    
+%
+% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%
+% The "title" command has an optional parameter, allowing the author to define a "short title" to be used in page headers.
+\title{Comparative Research on Predictive Models Based on MOBA Game Data Set}
+
+
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\pagestyle{plain} % removes running headers
+
+
+%
+% The "author" command and its associated commands are used to define the authors and their affiliations.
+% Of note is the shared affiliation of the first two authors, and the "authornote" and "authornotemark" commands
+% used to denote shared contribution to the research.
+
+\author{Yumin Xu, Michael Vigil, Logan Decker}
+\affiliation{%
+  \institution{New Mexico Institute of Mining and Technology\\
+    Fall 2021 - CSE-589-Predictive Data Analytics}
+  \streetaddress{801 Leroy Place}
+  \city{Socorro}
+  \state{New Mexico}}
+\email{yumin.xu@student.nmt.edu}
+\email{michael.vigil@student.nmt.edu}
+\email{logan.decker@student.nmt.edu}
+
+
+%
+% The abstract is a short summary of the work to be presented in the article.
+\begin{abstract}
+
+\end{abstract}
+
+
+%
+% Keywords. The author(s) should pick words that accurately describe the work being
+% presented. Separate the keywords with commas.
+\keywords{ }
+
+
+%
+% This command processes the author and affiliation and title information and builds
+% the first part of the formatted document.
+\maketitle
+
+\section{Introduction}
+
+\section{Training Model}
+
+\subsection{Decision Tree}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\subsection{K-NN}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\subsection{Naive Bayes}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\section{Evaluating Model}
+
+\subsection{Decision Tree}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\subsection{K-NN}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\subsection{Naive Bayes}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\section{Comparing}
+
+\subsection{Horizontal comparison}
+
+\subsubsection{Decision Tree }
+
+\subsubsection{K-NN}
+
+\subsubsection{Naive Bayes}
+
+\subsection{Longitudinal comparison}
+
+\subsubsection{Dota 2 Data Set }
+
+\subsubsection{LoL Data Set}
+
+\section{Conclusion}
+
+%
+% The next two lines define the bibliography style to be used, and the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+\begin{thebibliography}{9}
+\bibitem{c1} 
+\bibitem{c1} 
+\bibitem{c1} 
+\bibitem{c1} 
+\bibitem{c1} 
+\bibitem{c1} 
+\bibitem{c1}
+\bibitem{c1} 
+\bibitem{c1}
+\bibitem{c1}
+\bibitem{c1} 
+\bibitem{c1} 
+
+
+\end{thebibliography}
+
+\end{document}
