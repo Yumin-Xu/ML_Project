@@ -157,7 +157,7 @@ CART algorithm (Classification And Regression Tree, classification and regressio
 Before read data, we load all libraries we will use. Because the original variable name is too long, we use names command to rename them. We use as.factor command transformed the dependent variable into a factorial format.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.25]{lol1.png}
+		\includegraphics[scale=.25]{image/lol1.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -165,7 +165,7 @@ Before read data, we load all libraries we will use. Because the original variab
 We randomly select $70 \%$ of the data as the training set, named train, and the remaining data as the test set, named test.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.25]{lol2.png}
+		\includegraphics[scale=.25]{image/lol2.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -174,42 +174,42 @@ We use tc<-rpart.control(minsplit = 50,minbucket = 20,maxdepth = 30,xval =10,cp 
 minsplit is the minimum number of branch nodes, which means that if it is greater than or equal to 50, then the node will continue to divide, otherwise it will stop. minbucket is Minimum sample number of leaf nodes. maxdepth is Tree depth. xval is Number of cross-validation ，xval=10 is 10-fold cross-validation (the dataset is divided into 10 groups and fitted 10 times, with the ith fit trained with data other than the ith group and the ith group used for prediction; the aim is to reduce misclassification). The full name of cp is complexity parameter, which refers to the complexity of a certain point, for each step of splitting, the model must improve the goodness of fit, used to save the unnecessary time wasted on pruning.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.35]{lol3.png}
+		\includegraphics[scale=.35]{image/lol3.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 Then we use formular command and rpart.mod command to build a decision tree model. After the model is built we need to perform the post-pruning process. There are many post-pruning methods that can be used in categorical regression trees, such as: cost complexity pruning, minimum error pruning, pessimistic error pruning, etc. Here we only use the cost complexity pruning method.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.35]{lol4.png}
+		\includegraphics[scale=.35]{image/lol4.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 The rpart package provides a pruning method for complexity loss pruning. rpart.mod$\$ $cp will tell us how much cp and what is the average relative error when the model is split to each layer. 
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{lol6.png}
+		\includegraphics[scale=.3]{image/lol6.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 The estimated error (xerror), standard error (xstd), and average relative error (xerror±xstd) of the cross-validation can also be printed as line graphs via "plotcp".\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.5]{lol5.png}
+		\includegraphics[scale=.5]{image/lol5.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 The condition that the complexity pruning method satisfies is that when the estimated error (xerror) of the cross-validation is as small as possible (not necessarily the minimum value, but within one standard deviation (xstd) of the allowable minimum error), choose as large as possible The cp value. In our model we  choose the method of cp with the smallest xerror.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{lol8.png}
+		\includegraphics[scale=.3]{image/lol8.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 We use rpart.plot() function to draw the final decision tree.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.6]{lol7.jpg}
+		\includegraphics[scale=.6]{image/lol7.jpg}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -220,7 +220,7 @@ At this point, the decision tree model based on the LOL dataset has been built.\
 Same as the LOL dataset, we load all libraries we will use at the beginning. We start by making two changes to the dataset. First, we use the command to modify the original dataset since there is no id column in the original dataset. This is done to facilitate subsequent modeling operations. Second, to avoid potential effects, we unified the symbols indicating wins and losses with the command. Making the form of representing wins and losses the same as the LOL dataset is to make the two datasets comparable to the maximum extent possible.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.2]{dota1.png}
+		\includegraphics[scale=.2]{image/dota1.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -228,7 +228,7 @@ Same as the LOL dataset, we load all libraries we will use at the beginning. We 
 We randomly select $70 \%$ of the data as the training set, named train, and the remaining data as the test set, named test.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.2]{dota2.png}
+		\includegraphics[scale=.2]{image/dota2.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -236,50 +236,53 @@ We randomly select $70 \%$ of the data as the training set, named train, and the
 The number of variables is particularly large and because all of them may affect the final victory or defeat. Therefore we cannot reduce the number of variables at will. But the consequence of doing so is that the prepruning condition becomes very demanding.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.35]{dota3.png}
+		\includegraphics[scale=.35]{image/dota3.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 Then we use formular command and rpart.mod command to build a decision tree model. After the model is built we need to perform the post-pruning process. There are many post-pruning methods that can be used in categorical regression trees, such as: cost complexity pruning, minimum error pruning, pessimistic error pruning, etc. Here we only use the cost complexity pruning method.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.4]{dota4.png}
+		\includegraphics[scale=.4]{image/dota4.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 The rpart package provides a pruning method for complexity loss pruning. rpart.mod$\$ $cp will tell us how much cp and what is the average relative error when the model is split to each layer.  The estimated error (xerror), standard error (xstd), and average relative error (xerror±xstd) of the cross-validation can also be printed as line graphs via "plotcp".\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{dota5.png}
+		\includegraphics[scale=.3]{image/dota5.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 The condition that the complexity pruning method satisfies is that when the estimated error (xerror) of the cross-validation is as small as possible (not necessarily the minimum value, but within one standard deviation (xstd) of the allowable minimum error), choose as large as possible The cp value. In our model we  choose the method of cp with the smallest xerror.\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.4]{dota6.png}
+		\includegraphics[scale=.4]{image/dota6.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 We use rpart.plot() function to draw the final decision tree.\\
 At this point, the decision tree model based on the DOTA dataset has been built.\\\\
 \subsection{K-NN}
+\includegraphics[scale=0.25]{image/knncode.png}
  \\
 \subsubsection{LOL Dataset}
+\includegraphics[scale=0.25]{image/loldatasetsum.png}
  \\
 \subsubsection{DOTA Dataset}
+\includegraphics[scale=0.25]{image/dota2datasetsum.png}
  \\
 \subsection{Naive Bayes}
 \subsubsection{Code} 
  \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.2]{naive1.png}
+		\includegraphics[scale=.2]{image/naive1.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.2]{naive2.png}
+		\includegraphics[scale=.2]{image/naive2.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -300,27 +303,27 @@ After this setup, the process was nearly identical to that performed while train
  1.Importance of parameters\\
  \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{lol9.png}
+		\includegraphics[scale=.3]{image/lol9.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 2. ROC curve\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.5]{lol10.png}
+		\includegraphics[scale=.5]{image/lol10.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 3. Confusion matrix\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.65]{lol12.png}
+		\includegraphics[scale=.65]{image/lol12.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.35]{lol_result.png}
+		\includegraphics[scale=.35]{image/lol_result.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -330,7 +333,7 @@ However, according to the confusion matrix, we found that this classifier is not
  1.Importance of parameters\\
  \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{dota8.png}
+		\includegraphics[scale=.3]{image/dota8.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -338,14 +341,14 @@ However, according to the confusion matrix, we found that this classifier is not
 2. ROC curve\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.6]{dota10.png}
+		\includegraphics[scale=.6]{image/dota10.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
 3. Confusion matrix\\
 \begin{figure}[h!]
 	\centering
-		\includegraphics[scale=.3]{dota_result.png}
+		\includegraphics[scale=.3]{image/dota_result.png}
 	\caption{}
 	\label{FIG:1}
 \end{figure}\\
@@ -353,12 +356,17 @@ Since the AUC=0.574, the classifier obtained from our modeling only slightly out
 However, according to the confusion matrix, we found that the sensitivity and specificity of this classifier are not high enough.\\
 
 \subsection{K-NN}
+Was running into some issues with k-nn not wanting to read the correct data so my graphs were unable to be displayed
+ correctly.
  \\
 \subsubsection{LOL Dataset}
+Because of those issues I was unable to get some accurate data graphs presented for the report.
  \\
 \subsubsection{DOTA Dataset}
+Because of those issues I was unable to get some accurate data graphs presented for the report.
  \\
 \subsection{Naive Bayes}
+Because of those issues I was unable to get some accurate data graphs presented for the report.
  \\
 \subsubsection{LOL Dataset}
  Just like the DotA2 data training and evaluation, the training and evaluation phases were performed 100 times. Each time, the F1 score of the model would be calculated. At any point in the iterative process where the current F1 score was better than the previous best-recorded F1 score, the best F1 score and its corresponding data and model were saved. Doing this allowed for us to find the best model out of 100 random samples.\\
@@ -417,16 +425,17 @@ If we just consider the differences in data characteristics of the dataset, we c
 \subsubsection{Naive Bayes}
 We set out to determine if the final match results of two popular Multiplayer Online Battle Arena games, League of Legends and Defense of the Ancients 2, could be predicted based on data from both the start of a game and data from during the game. We used a few different model types in order to perform this prediction, and trained models on two different kinds of data. While our results showed some prediction capabilities, especially from data that was collected during each game, our models did not perform quite as well as we would have hoped.\\
 In training and testing on both pre-game and mid-game data, we aimed to determine if there was a degree of universality between the aspects that the models used on each data type. As can be seen more specifically in the Comparison section, however, there is virtually no universality between the data and their models.\\
-Finally, in using data from multiple games, we aimed to determine if there was any universality between these games that our models could find. [INSERT MORE TEXT HERE]\\
+Finally, in using data from multiple games, we aimed to determine if there was any universality between these games that our models could find.\\
 \subsection{ Longitudinal comparison}
 \\
 \subsubsection{LOL DATASET}
 \\
 \subsubsection{DOTA DATASET}
+
 \\
 
 \section{Conclusion}
-
+In conclusion, thanks to the data sets we gathered we were able to see some results and that it is possible to see some prediction capabilities from the training models of the two games. However, we were unable to reach the results we had hoped for in the end. Even though both games fall under the same category, it goes to show that there is very little similarities between the two large MOBAs.
 
 \par
 \printcredits
