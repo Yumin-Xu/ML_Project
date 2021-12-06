@@ -1,0 +1,403 @@
+%% 
+%% Copyright 2019-2020 Elsevier Ltd
+%% 
+%% This file is part of the 'CAS Bundle'.
+%% --------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'CAS Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for cas-sc documentclass for 
+%% double column output.
+
+%\documentclass[a4paper,fleqn,longmktitle]{cas-sc}
+\documentclass[a4paper,fleqn]{cas-sc}
+
+% \usepackage[numbers]{natbib}
+%\usepackage[authoryear]{natbib}
+\usepackage[authoryear,longnamesfirst]{natbib}
+
+%%%Author definitions
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+\tsc{WGM}
+\tsc{QE}
+\tsc{EP}
+\tsc{PMS}
+\tsc{BEC}
+\tsc{DE}
+%%%
+
+% Uncomment and use as if needed
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newdefinition{rmk}{Remark}
+%\newproof{pf}{Proof}
+%\newproof{pot}{Proof of Theorem \ref{thm}}
+
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+
+
+
+% Main title of the paper
+\title [mode = title]{Comparative Research on Predictive Models Based on MOBA Game Data Set}                      
+% Title footnote mark
+% eg: \tnotemark[1]
+%\tnotemark[1,2]
+
+% Title footnote 1.
+% eg: \tnotetext[1]{Title footnote text}
+% \tnotetext[<tnote number>]{<tnote text>} 
+
+
+
+% First author
+%
+% Options: Use if required
+% eg: \author[1,3]{Author Name}[type=editor,
+%       style=english,
+%       auid=000,
+%       bioid=1,
+%       prefix=Sir,
+%       orcid=0000-0000-0000-0000,
+%       facebook=<facebook id>,
+%       twitter=<twitter id>,
+%       linkedin=<linkedin id>,
+%       gplus=<gplus id>]
+\author[1,3]{Yumin Xu}
+\credit{Programming, Data analysis, Writing - Original draft preparation}
+
+% Corresponding author indication
+\cormark[1]
+
+% Footnote of the first author
+\fnmark[1]
+
+% Email id of the first author
+
+
+% URL of the first author
+%\ead[url]{www.cvr.cc, cvr@sayahna.org}
+
+%  Credit authorship
+%\credit{Conceptualization of this study, Methodology, Software}
+
+% Address/affiliation
+\affiliation[1]{organization={New Mexico Tech},
+    addressline={801 Leroy Place}, 
+    city={Socorro},
+    % citysep={}, % Uncomment if no comma needed between city and postcode
+    postcode={87801 NM}, 
+    % state={},
+    country={}}
+
+% Second author
+\author[2,4]{Michael Vigil}[style=english]
+\credit{Programming, Data analysis, Writing - Original draft preparation}
+
+% Third author
+\author[2,3]{Logan Decker}
+\fnmark[2]
+
+\credit{Programming, Data analysis, Writing - Original draft preparation}
+
+
+
+
+% Here goes the abstract
+\begin{abstract}
+With the rapid popularity and explosive development of MOBA e-Sports (Multiplayer Online Battle Arena electronic sports), much research is devoted to automatically predicting game results. Although these studies have great potential in various applications, previous studies are either based on prior features such as the historical win rate of game players or based on real-time features during the game. 
+So we want to ask how much the performance of different algorithms varies for the same feature type of dataset. If we use the same algorithm to process different types of datasets, does the difference between the prior and the posterior lead to the difference in model performance?
+In this paper, three common machine learning algorithms, decision trees, K-NN, and Naive Bayes, are chosen to model two different datasets. By testing the performance of the models, we find that the impact of the characteristics of the datasets on the model performance sometimes exceeds the impact of the different algorithms on the model performance.
+\end{abstract}
+
+% Use if graphical abstract is present
+% \begin{graphicalabstract}
+% \includegraphics{figs/grabs.pdf}
+% \end{graphicalabstract}
+
+% Research highlights
+\begin{highlights}
+\item Compare the performance of the same training model on different data sets.
+\item Compare the performance of different training models on the same data set.
+
+\end{highlights}
+
+% Keywords
+% Each keyword is seperated by \sep
+\begin{keywords}
+Decesion Tree \sep K-NN \sep Naive Bayes \sep Win-rate prediction 
+\end{keywords}
+
+
+\maketitle
+
+\section{Introduction}
+
+For a comparative study, we found two data sets from the data set open source website in the same domain but with different feature types. They are the LOL dataset and the DOTA data set, two MOBA games that are popular all over the world today, and they have slightly different rules but the same basic gameplay. However, the two data sets are selected with different features.\\
+The DOTA data set is reasonably sparse as only 10 of 113 possible roles are chosen in a given game. All games were played in a space of 2 hours on the 13th of August, 2016. Each row of the data set is a single game with the following features (in the order in the vector): 1. Team won the game (1 or -1) 2. Cluster ID (related to location) 3. Game mode (eg All Pick) 4. Game type (eg. Ranked) 5 - end: Each element is an indicator for a hero. Value of 1 indicates that a player from team '1' played as that hero and '-1' for the other team. Hero can be selected by only one player each game. This means that each row has five '1' and five '-1' values. This dataset contains the first 10min. stats of approx. 10k ranked games (SOLO QUEUE) from a high ELO (DIAMOND I to MASTER). Players have roughly the same level.\\
+For LOL dataset, each game is unique. The gameId can help us to fetch more attributes from the Riot API. There are 19 features per team (38 in total) collected after 10min in-game. This includes kills, deaths, gold, experience, level. The column blueWins is the target value (the value we are trying to predict). A value of 1 means the blue team has won. 0 otherwise. By the way, the two datasets have no missing value.\\
+Our study is divided into three main steps. Step one is Training. In training step, we apply the Decision Tree model on the two data sets respectively then apply the K-NN model on the two data sets respectively. Finally, we apply the Naive Bayes model on the two data sets respectively. Step two is evaluating. In evalutating step, based on the first step, we can get six training models. Use ROC curve and Confusion Matrix to evaluate these six models and analyze their pros and cons. Last Step is comparing. In the last step, we will have two types comparison. One is Horizontal comparison: Compare the performance of the same training model on different data sets. Another one is Longitudinal comparison: Compare the performance of different training models on the same data set. 、、
+All the above experiments will be performed in the Rstudio environment.
+
+\section{Training Model}
+\subsection{Decision Tree}
+CART algorithm (Classification And Regression Tree, classification and regression tree) is a kind of decision tree, proposed by Leo Breiman, Jerome Friedman, Richard Olshen and Charles Stone in 1984. It can be used for both classification and regression. This section will mainly introduce the R language implementation of the CART algorithm for classification.\\
+\subsubsection{LOL Dataset}
+1. Read Data\\
+Before read data, we load all libraries we will use. Because the original variable name is too long, we use names command to rename them. We use as.factor command transformed the dependent variable into a factorial format.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.25]{lol1.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+2. Create training set and test set\\
+We randomly select $70 \%$ of the data as the training set, named train, and the remaining data as the test set, named test.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.25]{lol2.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+3.Build a CART model\\
+We use tc<-rpart.control(minsplit = 50,minbucket = 20,maxdepth = 30,xval =10,cp = 0.001) to set the conditions for Pre-pruning. Among them, 
+minsplit is the minimum number of branch nodes, which means that if it is greater than or equal to 50, then the node will continue to divide, otherwise it will stop. minbucket is Minimum sample number of leaf nodes. maxdepth is Tree depth. xval is Number of cross-validation ，xval=10 is 10-fold cross-validation (the dataset is divided into 10 groups and fitted 10 times, with the ith fit trained with data other than the ith group and the ith group used for prediction; the aim is to reduce misclassification). The full name of cp is complexity parameter, which refers to the complexity of a certain point, for each step of splitting, the model must improve the goodness of fit, used to save the unnecessary time wasted on pruning.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.35]{lol3.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+Then we use formular command and rpart.mod command to build a decision tree model. After the model is built we need to perform the post-pruning process. There are many post-pruning methods that can be used in categorical regression trees, such as: cost complexity pruning, minimum error pruning, pessimistic error pruning, etc. Here we only use the cost complexity pruning method.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.35]{lol4.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+The rpart package provides a pruning method for complexity loss pruning. rpart.mod$\$ $cp will tell us how much cp and what is the average relative error when the model is split to each layer. 
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{lol6.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+The estimated error (xerror), standard error (xstd), and average relative error (xerror±xstd) of the cross-validation can also be printed as line graphs via "plotcp".\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.5]{lol5.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+The condition that the complexity pruning method satisfies is that when the estimated error (xerror) of the cross-validation is as small as possible (not necessarily the minimum value, but within one standard deviation (xstd) of the allowable minimum error), choose as large as possible The cp value. In our model we  choose the method of cp with the smallest xerror.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{lol8.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+We use rpart.plot() function to draw the final decision tree.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.6]{lol7.jpg}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+At this point, the decision tree model based on the LOL dataset has been built.\\
+
+\subsubsection{DOTA Dataset}
+ 1. Read Data\\
+Same as the LOL dataset, we load all libraries we will use at the beginning. We start by making two changes to the dataset. First, we use the command to modify the original dataset since there is no id column in the original dataset. This is done to facilitate subsequent modeling operations. Second, to avoid potential effects, we unified the symbols indicating wins and losses with the command. Making the form of representing wins and losses the same as the LOL dataset is to make the two datasets comparable to the maximum extent possible.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.2]{dota1.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+2. Create training set and test set\\
+We randomly select $70 \%$ of the data as the training set, named train, and the remaining data as the test set, named test.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.2]{dota2.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+3.Build a CART model\\
+The number of variables is particularly large and because all of them may affect the final victory or defeat. Therefore we cannot reduce the number of variables at will. But the consequence of doing so is that the prepruning condition becomes very demanding.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.35]{dota3.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+Then we use formular command and rpart.mod command to build a decision tree model. After the model is built we need to perform the post-pruning process. There are many post-pruning methods that can be used in categorical regression trees, such as: cost complexity pruning, minimum error pruning, pessimistic error pruning, etc. Here we only use the cost complexity pruning method.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.4]{dota4.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+The rpart package provides a pruning method for complexity loss pruning. rpart.mod$\$ $cp will tell us how much cp and what is the average relative error when the model is split to each layer.  The estimated error (xerror), standard error (xstd), and average relative error (xerror±xstd) of the cross-validation can also be printed as line graphs via "plotcp".\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{dota5.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+The condition that the complexity pruning method satisfies is that when the estimated error (xerror) of the cross-validation is as small as possible (not necessarily the minimum value, but within one standard deviation (xstd) of the allowable minimum error), choose as large as possible The cp value. In our model we  choose the method of cp with the smallest xerror.\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.4]{dota6.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+We use rpart.plot() function to draw the final decision tree.\\
+At this point, the decision tree model based on the DOTA dataset has been built.\\\\
+\subsection{K-NN}
+ \\
+\subsubsection{LOL Dataset}
+ \\
+\subsubsection{DOTA Dataset}
+ \\
+\subsection{Naive Bayes}
+ \\
+\subsubsection{LOL Dataset}
+ \\
+\subsubsection{DOTA Dataset}
+ \\
+
+\section{Evaluating Model}
+
+\subsection{Decision Tree}
+ 
+ 
+\subsubsection{LOL Dataset}
+ 1.Importance of parameters\\
+ \begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{lol9.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+2. ROC curve\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.5]{lol10.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+3. Confusion matrix\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.65]{lol12.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.35]{lol_result.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+Since the AUC = 0.734, the classifier obtained from our modeling outperforms random guesses. This classifier (model) can have some predictive value if the threshold value is properly set.\\
+However, according to the confusion matrix, we found that this classifier is not sensitive enough, although it is able to filter out false positives better.\\
+\subsubsection{DOTA Dataset}
+ 1.Importance of parameters\\
+ \begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{dota8.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+\newpage
+2. ROC curve\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.6]{dota10.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+3. Confusion matrix\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.3]{dota_result.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+Since the AUC=0.574, the classifier obtained from our modeling only slightly outperforms the random guesses. We consider the predictive value of this classifier to be low.\\
+However, according to the confusion matrix, we found that the sensitivity and specificity of this classifier are not high enough.\\
+
+\subsection{K-NN}
+ \\
+\subsubsection{LOL Dataset}
+ \\
+\subsubsection{DOTA Dataset}
+ \\
+\subsection{Naive Bayes}
+ \\
+\subsubsection{LOL Dataset}
+ \\
+\subsubsection{DOTA Dataset}
+ \\
+
+\section{Comparing}
+\subsection{Horizontal comparison}
+\\
+\subsubsection{Decision Tree}
+From the evaluation results of the model, it can be seen that the decision tree algorithm performs significantly better on the LOL dataset than on the DOTA dataset. Specifically, the decision tree algorithm builds a fully usable classifier on the LOL dataset. However, the classifier built on the DOTA dataset is almost ineffective. Notice that the LOL dataset mainly collects data within the match, while the DOTA dataset collects data mainly outside the match.\\
+If we just consider the differences in data characteristics of the dataset, we can have the following inferences. For MOBAs, the performance of the player while the game is in progress may be more important than the identity of the player, the chosen role. If we look at the data features, the decision tree algorithm seems to perform a little better on the posterior features. But there are similarities between the two classifiers. That is, they both have lower sensitivity than specificity. This means that these classifiers are less prone to errors. This is probably considered an advantage that the decision tree model exhibits.
+\\
+\subsubsection{K-NN}
+\\
+\subsubsection{Naive Bayes}
+\\
+\subsection{ Longitudinal comparison}
+\\
+\subsubsection{LOL DATASET}
+\\
+\subsubsection{DOTA DATASET}
+\\
+
+\section{Conclusion}
+
+
+\par
+\printcredits
+
+%% Loading bibliography style file
+% \bibliographystyle{model1-num-names}
+\bibliographystyle{cas-model2-names}
+
+% Loading bibliography database
+\bibliography{cas-refs}
+
+
+%\vskip3pt
+
+\bio{}
+Author biography without author photo.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+Author biography. Author biography. Author biography.\\
+\endbio
+
+
+
+\end{document}
+
