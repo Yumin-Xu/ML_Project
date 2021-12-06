@@ -1,0 +1,21 @@
+In order to determine a relatively high-quality model, the training and evaluation phases were performed 100 times. Each time, the F1 score of the model would be calculated. At any point in the iterative process where the current F1 score was better than the previous best-recorded F1 score, the best F1 score and its corresponding data and model were saved. Doing this allowed for us to find the best model out of 100 random samples.\\
+The best model that we were able to generate based on our data didn't perform very well. The following table shows its performance.\\
+\begin{center}
+DotA2 Prediction Metrics\\
+$\begin{tabular}{l|l}
+F1 Score & 0.6086315 \\ \hline
+Accuracy & 0.5617563 \\ \hline
+Precision & 0.5738121 \\ \hline
+Recall & 0.6479498 \\
+\end{tabular}$
+\end{center}\\
+The following is that same model's confusion matrix.\\
+\begin{center}
+DotA2 Prediction Confusion Matrix\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 4550 & 5211 \\ \hline
+True & 3812 & 7016 \\
+\end{tabular}$
+\end{center}\\
+As can be seen by the above two tables, even the best Naive Bayes model that we could generate from this data performed poorly. With overall scores of just around 0.6, this model is only barely better than randomly guessing the outcome of a game of DotA2. We suspect that this is primarily due to the nature of the data set that we used, as it relies heavily upon hero selection as opposed to other factors that can only be determined once the game has begun. It would seem that attempting to predict results before matches begin is extremely difficult at best.

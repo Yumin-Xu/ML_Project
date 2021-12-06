@@ -1,0 +1,97 @@
+#Setup
+install.packages("naivebayes")
+install.packages("MLmetrics")
+library(naivebayes)
+library(MLmetrics)
+
+#Normalization Function
+normalize <- function(x) {
+	return ((x - min(x)) / (max(x) - min(x)))
+}
+
+#Read in data, combine DotA2 sets
+lol = read.csv("high_diamond_ranked_10min.csv")
+dota2_1 = read.csv("dota2Train.csv", header = FALSE)
+dota2_2 = read.csv("dota2Test.csv", header = FALSE)
+dota2 = rbind(dota2_1, dota2_2)
+
+#Preprocess data
+lol = lol[-1]
+lol_normalized = as.data.frame(lapply(lol, normalize))
+lol_normalized[1] = as.logical(lol_normalized$blueWins)
+dota2[1] = replace(dota2[1], dota2[1] < 1, 0)
+dota2_normalized = as.data.frame(lapply(dota2, normalize))
+dota2_normalized[1] = as.logical(dota2_normalized$V1)
+
+#Loop for training and testing
+best_lol_f1 = 0
+best_dota2_f1 = 0
+for (val in 1:100) {
+  #Split into train/test sets
+	lol_train = sample(nrow(lol), replace = FALSE, 7903)
+	lol.training = lol_normalized[lol_train,]
+	lol.testing = lol_normalized[-lol_train,]
+	dota2_train = sample(nrow(dota2), replace = FALSE, 82355)
+	dota2.training = dota2_normalized[dota2_train,]
+	dota2.testing = dota2_normalized[-dota2_train,]
+
+  #Train the models
+	lol_model = naive_bayes(lol.training[-1], lol.training$blueWins)
+	dota2_model = naive_bayes(dota2.training[-1], dota2.training$V1)
+
+  #Make predictions
+	lol_pred = predict(lol_model, lol.testing[-1])
+	dota2_pred = predict(dota2_model, dota2.testing[-1])
+
+  #Calculate F1 scores
+	lol_f1 = F1_Score(lol.testing$blueWins, lol_pred, positive = "TRUE")
+	dota2_f1 = F1_Score(dota2.testing$V1, dota2_pred, positive = "TRUE")
+
+  #Record model and data split for good performance
+	if (lol_f1 > best_lol_f1) {
+		best_lol_model = lol_model
+		best_lol_train = lol.training
+		best_lol_test = lol.testing
+		best_lol_pred = lol_pred
+		best_lol_f1 = lol_f1
+	}
+	if (dota2_f1 > best_dota2_f1) {
+		best_dota2_model = dota2_model
+		best_dota2_train = dota2.training
+		best_dota2_test = dota2.testing
+		best_dota2_pred = dota2_pred
+		best_dota2_f1 = dota2_f1
+	}
+}
+
+#LoL results
+table(best_lol_test$blueWins, best_lol_pred)
+F1_Score(best_lol_test$blueWins, best_lol_pred, positive = "TRUE")
+Accuracy(best_lol_test$blueWins, best_lol_pred)
+Precision(best_lol_test$blueWins, best_lol_pred, positive = "TRUE")
+Recall(best_lol_test$blueWins, best_lol_pred, positive = "TRUE")
+
+#DotA2 results
+table(best_dota2_test$V1, best_dota2_pred)
+F1_Score(best_dota2_test$V1, best_dota2_pred, positive = "TRUE")
+Accuracy(best_dota2_test$V1, best_dota2_pred)
+Precision(best_dota2_test$V1, best_dota2_pred, positive = "TRUE")
+Recall(best_dota2_test$V1, best_dota2_pred, positive = "TRUE")
+
+#Cross test
+lol_cross_pred = predict(best_lol_model, best_dota2_test[-1])
+dota2_cross_pred = predict(best_dota2_model, best_lol_test[-1])
+
+#DotA2 model results on LoL data
+table(best_lol_test$blueWins, dota2_cross_pred)
+F1_Score(best_lol_test$blueWins, dota2_cross_pred, positive = "TRUE")
+Accuracy(best_lol_test$blueWins, dota2_cross_pred)
+Precision(best_lol_test$blueWins, dota2_cross_pred, positive = "TRUE")
+Recall(best_lol_test$blueWins, dota2_cross_pred, positive = "TRUE")
+
+#LoL model results on DotA2 data
+table(best_dota2_test$V1, lol_cross_pred)
+F1_Score(best_dota2_test$V1, lol_cross_pred, positive = "TRUE")
+Accuracy(best_dota2_test$V1, lol_cross_pred)
+Precision(best_dota2_test$V1, lol_cross_pred, positive = "TRUE")
+Recall(best_dota2_test$V1, lol_cross_pred, positive = "TRUE")

@@ -1,0 +1,40 @@
+Though the idea behind using trained models on opposite data sets seems like it could yield interesting results, the actual results are quite disappointing. Due to the drastic difference between the data sets caused by pre-game data vs. mid-game data, these models struggled to perform on the data sets of the other variety. Additionally, because of the dramatic difference in the type of data of each data set, it is nearly impossible to process either set enough to generate a set that could be used by the appropriate model.\\
+Here are the results of cross-testing, starting with the results from using the DotA2 model on the LoL data.\\
+\begin{center}
+DotA2 Model Prediction Metrics on LoL Data\\
+$\begin{tabular}{l|l}
+F1 Score & 0.6630582 \\ \hline
+Accuracy & 0.4959514 \\ \hline
+Precision & 0.4959514 \\ \hline
+Recall & 1 \\
+\end{tabular}$
+\end{center}\\
+The following is that same model's confusion matrix.\\
+\begin{center}
+DotA2 Model Confusion Matrix on LoL Data\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 0 & 996 \\ \hline
+True & 0 & 980 \\
+\end{tabular}$
+\end{center}\\
+Here are the results of cross-testing the LoL model on the DotA2 data.\\
+\begin{center}
+LoL Model Prediction Metrics on DotA2 Data\\
+$\begin{tabular}{l|l}
+F1 Score & 0/0 or NaN \\ \hline
+Accuracy & 0.4740881 \\ \hline
+Precision & 0/0 or NaN \\ \hline
+Recall & 0 \\
+\end{tabular}$
+\end{center}\\
+This is the corresponding confusion matrix for the previous table.\\
+\begin{center}
+LoL Model Confusion Matrix on DotA2 Data\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 9761 & 0 \\ \hline
+True & 10828 & 0 \\
+\end{tabular}$
+\end{center}\\
+As can be seen by the above tables, the data cannot be translated well, and the models instead resort to using the method wherein all data is assigned the same outcome ('FALSE' in the case of the LoL model on the DotA2 dataset, and 'TRUE' in the case of the DotA2 model on the LoL dataset). Though at first glance this seems to produce some desired results in specific areas, like Recall, the confusion matrices show that these models are not actually looking at the data before classifying it, and are therefore not really predicting anything. As such, it would seem that the data disparity between pre-game and mid-game data points is too large, and our initial assumption does not hold up at all.

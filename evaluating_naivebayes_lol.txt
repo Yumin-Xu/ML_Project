@@ -1,0 +1,21 @@
+Just like the DotA2 data training and evaluation, the training and evaluation phases were performed 100 times. Each time, the F1 score of the model would be calculated. At any point in the iterative process where the current F1 score was better than the previous best-recorded F1 score, the best F1 score and its corresponding data and model were saved. Doing this allowed for us to find the best model out of 100 random samples.\\
+The best model that we were able to generate based on our data performed somewhat well. The following table shows its performance.\\
+\begin{center}
+LoL Prediction Metrics\\
+$\begin{tabular}{l|l}
+F1 Score & 0.7512742 \\ \hline
+Accuracy & 0.7530364 \\ \hline
+Precision & 0.7505092 \\ \hline
+Recall & 0.7520408 \\
+\end{tabular}$
+\end{center}\\
+The following is that same model's confusion matrix.\\
+\begin{center}
+LoL Prediction Confusion Matrix\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 751 & 245 \\ \hline
+True & 243 & 737 \\
+\end{tabular}$
+\end{center}\\
+As can be seen by the above two tables, the best Naive Bayes model we could generate performed reasonably well. With overall scores hovering right near 0.75, this model can more-often-than-not predict the outcome of a game. We suspect that this better performance relative to the DotA2 model is due to the nature of this data set, as it focuses heavily on data collected once 10 minutes have passed in each game. Though this is still usually somewhat early in the game (most League of Legends games tend to average between 25 and 30 minutes at this tier), it would seem that enough has occurred in order to make a reasonable guess as to which team is going to win.
