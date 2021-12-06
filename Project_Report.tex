@@ -270,11 +270,26 @@ At this point, the decision tree model based on the DOTA dataset has been built.
 \subsubsection{DOTA Dataset}
  \\
 \subsection{Naive Bayes}
+\subsubsection{Code} 
+ \begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.2]{naive1.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=.2]{naive2.png}
+	\caption{}
+	\label{FIG:1}
+\end{figure}\\
  \\
 \subsubsection{LOL Dataset}
- \\
+ Training this data set was also generally quite easy. The League of Legends data set that we used had included Riot Game ID values for each of the data points, which we removed as a part of preprocessing. Other than that, the same conversion of '0' and '1' values to 'FALSE' and 'TRUE' values (respectively) for the 'Win' category was performed, and the normalization to values between 0 and 1 for all non-win categories was also performed.\\
+After this setup, the process was nearly identical to that performed while training the DotA2 set. For 100 iterations, the data set was split randomly into 80-20 proportions where the larger portion was used for training the Naive Bayes model.\\
 \subsubsection{DOTA Dataset}
- \\
+ Training this data set was also generally quite easy. The League of Legends data set that we used had included Riot Game ID values for each of the data points, which we removed as a part of preprocessing. Other than that, the same conversion of '0' and '1' values to 'FALSE' and 'TRUE' values (respectively) for the 'Win' category was performed, and the normalization to values between 0 and 1 for all non-win categories was also performed.\\
+After this setup, the process was nearly identical to that performed while training the DotA2 set. For 100 iterations, the data set was split randomly into 80-20 proportions where the larger portion was used for training the Naive Bayes model.\\
 
 \section{Evaluating Model}
 
@@ -346,9 +361,49 @@ However, according to the confusion matrix, we found that the sensitivity and sp
 \subsection{Naive Bayes}
  \\
 \subsubsection{LOL Dataset}
- \\
+ Just like the DotA2 data training and evaluation, the training and evaluation phases were performed 100 times. Each time, the F1 score of the model would be calculated. At any point in the iterative process where the current F1 score was better than the previous best-recorded F1 score, the best F1 score and its corresponding data and model were saved. Doing this allowed for us to find the best model out of 100 random samples.\\
+The best model that we were able to generate based on our data performed somewhat well. The following table shows its performance.\\
+\begin{center}
+LoL Prediction Metrics\\
+$\begin{tabular}{l|l}
+F1 Score & 0.7512742 \\ \hline
+Accuracy & 0.7530364 \\ \hline
+Precision & 0.7505092 \\ \hline
+Recall & 0.7520408 \\
+\end{tabular}$
+\end{center}\\
+The following is that same model's confusion matrix.\\
+\begin{center}
+LoL Prediction Confusion Matrix\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 751 & 245 \\ \hline
+True & 243 & 737 \\
+\end{tabular}$
+\end{center}\\
+As can be seen by the above two tables, the best Naive Bayes model we could generate performed reasonably well. With overall scores hovering right near 0.75, this model can more-often-than-not predict the outcome of a game. We suspect that this better performance relative to the DotA2 model is due to the nature of this data set, as it focuses heavily on data collected once 10 minutes have passed in each game. Though this is still usually somewhat early in the game (most League of Legends games tend to average between 25 and 30 minutes at this tier), it would seem that enough has occurred in order to make a reasonable guess as to which team is going to win.\\
 \subsubsection{DOTA Dataset}
- \\
+ In order to determine a relatively high-quality model, the training and evaluation phases were performed 100 times. Each time, the F1 score of the model would be calculated. At any point in the iterative process where the current F1 score was better than the previous best-recorded F1 score, the best F1 score and its corresponding data and model were saved. Doing this allowed for us to find the best model out of 100 random samples.\\
+The best model that we were able to generate based on our data didn't perform very well. The following table shows its performance.\\
+\begin{center}
+DotA2 Prediction Metrics\\
+$\begin{tabular}{l|l}
+F1 Score & 0.6086315 \\ \hline
+Accuracy & 0.5617563 \\ \hline
+Precision & 0.5738121 \\ \hline
+Recall & 0.6479498 \\
+\end{tabular}$
+\end{center}\\
+The following is that same model's confusion matrix.\\
+\begin{center}
+DotA2 Prediction Confusion Matrix\\
+$\begin{tabular}{c|c|c}
+ & False & True \\ \hline
+False & 4550 & 5211 \\ \hline
+True & 3812 & 7016 \\
+\end{tabular}$
+\end{center}\\
+As can be seen by the above two tables, even the best Naive Bayes model that we could generate from this data performed poorly. With overall scores of just around 0.6, this model is only barely better than randomly guessing the outcome of a game of DotA2. We suspect that this is primarily due to the nature of the data set that we used, as it relies heavily upon hero selection as opposed to other factors that can only be determined once the game has begun. It would seem that attempting to predict results before matches begin is extremely difficult at best.\\
 
 \section{Comparing}
 \subsection{Horizontal comparison}
@@ -360,7 +415,9 @@ If we just consider the differences in data characteristics of the dataset, we c
 \subsubsection{K-NN}
 \\
 \subsubsection{Naive Bayes}
-\\
+We set out to determine if the final match results of two popular Multiplayer Online Battle Arena games, League of Legends and Defense of the Ancients 2, could be predicted based on data from both the start of a game and data from during the game. We used a few different model types in order to perform this prediction, and trained models on two different kinds of data. While our results showed some prediction capabilities, especially from data that was collected during each game, our models did not perform quite as well as we would have hoped.\\
+In training and testing on both pre-game and mid-game data, we aimed to determine if there was a degree of universality between the aspects that the models used on each data type. As can be seen more specifically in the Comparison section, however, there is virtually no universality between the data and their models.\\
+Finally, in using data from multiple games, we aimed to determine if there was any universality between these games that our models could find. [INSERT MORE TEXT HERE]\\
 \subsection{ Longitudinal comparison}
 \\
 \subsubsection{LOL DATASET}
@@ -385,16 +442,18 @@ If we just consider the differences in data characteristics of the dataset, we c
 %\vskip3pt
 
 \bio{}
-Author biography without author photo.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
-Author biography. Author biography. Author biography.\\
+[1] Kalyanaraman (2014). To win or not to win? A prediction model to determine the outcome of a DotA2 match. http://cseweb.ucsd.edu/ jmcauley/cse255/projects/Kaushik Kalyanaraman.pdf.\\
+\bio{}
+[2]Atish Agarwala, Michael Pearce. Learning Dota 2 Team Compositions, 2014.\\
+\bio{}
+[3]Thomas E. Batsford. Calculating optimal jungling routes in dota2 using neural networks and genetic algorithms. Project, University of Derby, 2014..\\
+\bio{}
+[4]Shuo Chen and Thorsten Joachims. Predicting matchups and preferences in context. KDD, 2016.\\
+\bio{}
+[5]Hao Yi Ong, Sunil Deolalikar, and Mark Peng. Player behavior and optimal team composition for online multiplayer games. 2015.\\
+\bio{}
+[6]Kuangyan Song, Tianyi Zhang, and Chao Ma. Predicting the winning side of dota2. Course project, Stanford University, 2015.\\
+
 \endbio
 
 
